@@ -4,7 +4,7 @@ Code Snapshot Generator is a specialized Python tool designed to create clean, s
 
 ## ✨ Features
 
-* **Smart Code Collapsing:** Uses Abstract Syntax Trees (AST) via `tree-sitter` to accurately identify and collapse function bodies in **Python**, **Go**, and **Julia**, replacing them with lightweight comments.
+* **Smart Code Collapsing:** Uses Abstract Syntax Trees (AST) via `tree-sitter` to accurately identify and collapse function bodies in **Python**, **Go**, **Julia**, **JavaScript**, and **C#**, replacing them with lightweight comments.
 * **Docstring Preservation:** Intelligently preserves Python docstrings when collapsing functions so LLMs retain the contextual explanation of the code.
 * **ASCII Directory Tree:** Automatically generates a visual, bird's-eye view of your included project structure at the top of the Markdown file.
 * **Robust Filtering:** Highly configurable inclusion and exclusion rules using a simple TOML file.
@@ -17,12 +17,14 @@ Code Snapshot Generator is a specialized Python tool designed to create clean, s
 
 ### Installation
 
-Install the required Tree-sitter packages using pip:
+The easiest way to install the required dependencies is using the provided `requirements.txt` file:
 
 ```bash
-pip install tree-sitter tree-sitter-python tree-sitter-go tree-sitter-julia
+pip install -r requirements.txt
 
 ```
+
+*(This will install the core `tree-sitter` library along with the grammars for Python, Go, Julia, JavaScript, and C#).*
 
 ## ⚙️ Configuration
 
@@ -51,7 +53,7 @@ The tool is driven by a `.toml` configuration file. You can define exact files t
 * **`Paths`**: A list of absolute paths to files or folders.
 * **`Include`**: Comma-separated file extensions. Use an empty string `""` to include extensionless files (like `Dockerfile`).
 * **`Exclude`**: Comma-separated folder names to skip during traversal.
-* **`CollapseFunctions`**: If `true`, the tool will parse `.py`, `.go`, and `.jl` files and remove the internal logic of functions.
+* **`CollapseFunctions`**: If `true`, the tool will parse `.py`, `.go`, `.jl`, `.js`, and `.cs` files and remove the internal logic of functions.
 
 ## 🚀 Usage
 
@@ -63,17 +65,3 @@ python main.py path/to/myproject.toml
 ```
 
 Upon success, the tool will generate a file named `myproject.md` in the same directory as your configuration file.
-
-## 📂 Project Architecture
-
-```text
-code_snapshot_generator/
-├── main.py                 # CLI entry point
-├── README.md               # Documentation
-└── src/
-    ├── ast_parser.py       # Tree-sitter logic for function collapsing
-    ├── compiler.py         # Markdown formatting and ASCII tree generation
-    ├── config_parser.py    # TOML reading and validation
-    └── file_walker.py      # Directory traversal and filtering
-
-```

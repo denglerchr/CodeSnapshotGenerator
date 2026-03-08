@@ -1,6 +1,6 @@
 from pathlib import Path
 from file_walker import TargetFile
-from ast_parser import collapse_code
+from ast_parser import LANGUAGES, collapse_code
 
 # The language map provided in your specification
 LANG_MAP = {
@@ -98,7 +98,7 @@ def compile_project_snapshot(target_files: list[TargetFile]) -> tuple[str, str]:
         name = file_path.name
         decorator = LANG_MAP.get(name, LANG_MAP.get(ext, 'text'))
 
-        if target.collapse_functions and ext in ['.py', '.go', '.jl']:
+        if target.collapse_functions and ext in LANGUAGES:
             try:
                 content = collapse_code(content, ext)
             except Exception as e:
